@@ -3,6 +3,8 @@ import requests
 from api_keys import wkey
 import os, os.path
 import errno
+from scipy.stats import linregress
+from matplotlib import pyplot as plt
 
 # Taken from https://stackoverflow.com/a/600612/119527
 def mkdir_p(path):
@@ -19,9 +21,21 @@ def safe_open_w(path):
     mkdir_p(os.path.dirname(path))
 
     return open(path, 'w', encoding = "UTF-16")
-
 ###
 
+
+def make_graph(x, y, x_label = None, y_label = None, title = None, linreg = False):
+    slope, int, r, p, std_err = linregress(x = x, y = y)
+    fit = slope * x + int
+    plt.scatter(x,y)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(title)
+    if linreg:
+        plt.plot(x,fit,"r--")
+        plt.legend(['y={:.2f}x+{:.2f}'.format(slope,int)])
+        print(f'r = {r:.5f}')
+    return plt
 
 
 def request_city(city : str):
