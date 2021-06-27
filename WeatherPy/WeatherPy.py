@@ -65,9 +65,10 @@ def make_row(json):
     lat = json["coord"]["lat"]
     lng = json["coord"]["lon"]
     name = json["name"]
+    country = json["sys"]["country"]
 
     row = {}
-    for variable in ["name", "lat", "lng", "max_temp", "temperature", "humidity",
+    for variable in ["name", "country", "lat", "lng", "max_temp", "temperature", "humidity",
             "cloudiness", "wind_speed", "date"]:
         row[variable] = eval(variable)
 
